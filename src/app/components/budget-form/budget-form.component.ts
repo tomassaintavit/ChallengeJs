@@ -2,6 +2,7 @@ import { formatCurrency } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Transaction} from './../../models/transaction.model';
+import { TransactionService } from '../../services/transaction.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class BudgetFormComponent implements OnInit {
 
   typeTransaction: string;
 
-  constructor() { }
+  constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
     this.typeTransaction = "Tipo";
@@ -23,17 +24,19 @@ export class BudgetFormComponent implements OnInit {
     this.typeTransaction = name;
   }
 
-  onAddTransaction(form: NgForm){
+  onAddTransaction(form: NgForm): Transaction{
     if(form.invalid){
       return;
     }
     const transaction: Transaction = {
+         id: null,
         name: form.value.name,
         cash: form.value.cash,
         date: form.value.date,
         type: form.value.select
     };
     console.log(transaction);
+    this.transactionService.postTransaction(transaction).subscribe();
   }
   setDefault(){
     (<HTMLInputElement>document.getElementById("exampleFormControlInput1")).value = "";
