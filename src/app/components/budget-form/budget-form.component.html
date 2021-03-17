@@ -1,15 +1,17 @@
 <h2 style="margin-left: 0.5cm;">Formulario de transacción</h2>
 
-<form style="margin: 1cm">
+<form (submit)="onAddTransaction(budgetForm)" #budgetForm="ngForm" style="margin: 1cm;">
   <div class="form-group">
     <div class="row">
       <div class="col col-4">
         <label>Concepto</label>
     <input
       type="text"
+      name="name"
+      ngModel
       class="form-control"
       id="exampleFormControlInput1"
-      placeholder=""
+      required
     />
       </div>
     </div>
@@ -20,9 +22,11 @@
         <label>Monto</label>
         <input
           type="number"
+          name="cash"
+          ngModel
           class="form-control"
-          id="exampleFormControlInput1"
-          placeholder=""
+          id="exampleFormControlInput2"
+          required
         />
       </div>
     </div>
@@ -33,9 +37,11 @@
         <label>Fecha</label>
         <input
           type="date"
+          name="date"
+          ngModel
           class="form-control"
-          id="exampleFormControlInput1"
-          placeholder=""
+          id="exampleFormControlInput3"
+          required
         />
       </div>
     </div>
@@ -47,11 +53,11 @@
       </div>
     </div>
     <div class="row">
-      <select style="margin-left: 0.5cm;" name="select">
-        <option value="value1"  selected>Ingreso</option>
-        <option value="value2">Egreso</option>
+      <select id="options" style="margin-left: 0.5cm;" name="select" ngModel required>
+        <option value="Ingreso"  selected>Ingreso</option>
+        <option value="Egreso">Egreso</option>
       </select>
     </div>
   </div>
-  <button type="button" class="btn btn-success">Guardar</button>
+  <button type="submit" class="btn btn-success" [disabled]="!budgetForm.form.valid" (click)="setDefault()">Guardar</button>
 </form>
