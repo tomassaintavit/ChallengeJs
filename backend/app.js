@@ -1,5 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mysql = require("mysql");
+
+
+let connection = mysql.createConnection({
+  host: 'localhost',
+  database: 'challenge',
+  port: '3306',
+  user: 'root',
+  password: 'root'
+});
+
+connection.connect((err) => {
+  if (err) {
+    throw err;
+  } else {
+    console.log('Connection to Data Base!');
+  }
+});
+
+
+
 
 const app = express();
 
@@ -19,30 +40,46 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/api/transaction", (req,res,next) => {
-  const transaction = req.body;
-  console.log(transaction);
-  return res.status(201).json({message: 'transaction received'});
+app.post("/api/transaction", async (req, res, next) => {
+  const data = await req.body;
+  const transaction = data.transaction;
+
+  connection.query(`INSERT INTO transaction(name, cash, date, type) VALUES ('${transaction.name}', ${transaction.cash}, '${transaction.date}', '${transaction.type}')`, (err, result) => {
+    if (err) {
+      res.status(500).send({message: 'Cannot insert transaction to database'});
+      throw err;
+    } else {
+      console.log('One row added');
+      return res.status(201).json({ message: 'transaction received' });
+    }
+  });
+
 });
 
-app.get("/api/transaction", (req, res, next) => {
-  const transactions = [
-    {
-      id: "1234",
-      name: "Tomas gastos",
-      cash: "20000",
-      date: "Wed Mar 17 2021 12:16:26 GMT-0300",
-      type: "Ingreso",
-    },
-    {
-      id: "4321",
-      name: "Peter gastos",
-      cash: "25000",
-      date: "Wed Mar 17 2021 12:16:26 GMT-0300",
-      type: "Egreso",
-    },
-  ];
-  res.status(200).json(transactions);
+app.get("/api/transaction", async (req, res, next) => {
+
+  const transactions = [];
+
+  await connection.query('SELECT * FROM transaction', (err, result, fields) => {
+    if (err) {
+      res.status(500).send({ message: 'Internal server ERROR' });
+      throw err;
+
+    } else {
+      if (result != null) {
+        result.forEach(transaction => {
+          transactions.push(transaction);
+        });
+        res.status(200).json(transactions);
+      } else {
+        res.status(404).send();
+      }
+
+    }
+  });
+
 });
+
+//connection.end();
 
 module.exports = app;
