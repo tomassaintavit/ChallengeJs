@@ -1,19 +1,21 @@
 <h3>Listado de presupuesto:</h3>
-<table class="table" style="margin-top: 1cm;">
-  <thead class=" thead-dark">
+<table class="table">
+  <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Concepto</th>
       <th scope="col">Monto</th>
+      <th scope="col">Fecha</th>
       <th scope="col">Tipo</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr *ngFor="let transaction of transactions">
       <th scope="row">1</th>
-      <td>Pago de bici</td>
-      <td>$6000</td>
-      <td>Egreso</td>
+      <td>{{transaction.name}}</td>
+      <td>{{transaction.cash}}</td>
+      <td>{{transaction.date}}</td>
+      <td>{{transaction.type}}</td>
     </tr>
 
   </tbody>

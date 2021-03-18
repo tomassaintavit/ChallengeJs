@@ -14,8 +14,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getTransactions().subscribe((transaction) => {
-      this.transactions = transaction;
-    })
+    this.transactions = transaction;
+    //this.transactions.slice(0,10);
+    });
+  }
+
+  getActualMoney(){
+    let actives = 0;
+    let pasives = 0;
+    this.transactions.forEach(ele => {
+      if(ele.type === 'Ingreso'){
+        actives += ele.cash;
+      }else {
+        pasives += ele.cash
+      }
+    });
+
+    return actives - pasives;
+    
   }
 
 }
