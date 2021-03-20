@@ -20,10 +20,34 @@ export class TransactionService {
     return this.http.get<Transaction[]>(`${this.baseUrl}/api/transaction`, httpOptions);
   }
 
+  getTransaction(idTransaction: string): Observable<Transaction>{
+    const httpOptions = {
+      headers: new HttpHeaders().set('Accept', 'application/json')
+    }
+
+    return this.http.get<Transaction>(`${this.baseUrl}/transaction/${idTransaction}`, httpOptions);
+  }
+
   postTransaction(transaction: Transaction): Observable<Transaction>{
     const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json')
     }
     return this.http.post<Transaction>(`${this.baseUrl}/api/transaction`,{ transaction }, httpOptions);
   }
+
+  updateTransaction(transaction: Transaction): Observable<Transaction>{
+    const httpOptions = {
+      headers: new HttpHeaders().set('Accept', 'application/json')
+    }
+    return this.http.post<Transaction>(`${this.baseUrl}/update/transaction`,{ transaction }, httpOptions);
+  }
+
+  deleteTransaction(idTransaction: string): Observable<string>{
+    const httpOptions = {
+      headers: new HttpHeaders().set('Accept', 'application/json')
+    }
+    return this.http.delete<string>(`${this.baseUrl}/api/delete/transaction/${idTransaction}`, httpOptions);
+  }
+
+  
 }

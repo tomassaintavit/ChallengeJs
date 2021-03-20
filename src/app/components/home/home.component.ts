@@ -8,6 +8,7 @@ import { TransactionService } from '../../services/transaction.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
   transactions: Transaction[];
 
   constructor( private transactionService: TransactionService) { }
@@ -15,7 +16,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.transactionService.getTransactions().subscribe((transaction) => {
     this.transactions = transaction;
-    //this.transactions.slice(0,10);
     });
   }
 

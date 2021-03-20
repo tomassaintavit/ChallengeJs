@@ -35,13 +35,10 @@ export class BudgetFormComponent implements OnInit {
         date: form.value.date,
         type: form.value.select
     };
-    console.log(transaction);
+    
     this.transactionService.postTransaction(transaction).subscribe();
+    form.resetForm();
+    alert('Operacion guardada!')
   }
-  setDefault(){
-    (<HTMLInputElement>document.getElementById("exampleFormControlInput1")).value = "";
-    (<HTMLInputElement>document.getElementById("exampleFormControlInput2")).value = "";
-    (<HTMLInputElement>document.getElementById("exampleFormControlInput3")).value = "";
-    (<HTMLInputElement>document.getElementById("options")).value = "";
-  }
+  
 }

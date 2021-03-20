@@ -1,7 +1,7 @@
 <h3>Mi Presupuesto actual : ${{getActualMoney()}}</h3>
 <hr>
 
-<h3>Historico:</h3>
+<h3>Historico</h3>
 <div class="row" style="margin-top: 1cm;">
   <div class="col col-9 ">
     <table class="table">
@@ -14,11 +14,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let transaction of transactions">
-          <th scope="row">1</th>
-          <td>{{transaction.name}}</td>
-          <td>{{transaction.cash}}</td>
-          <td>{{transaction.type}}</td>
+        <tr *ngFor="let transaction of transactions; index as i">
+          
+          <th  *ngIf="i < 10" scope="row">{{i + 1}}</th>
+          <td *ngIf="i < 10">{{transaction.name}}</td>
+          <td *ngIf="i < 10">{{transaction.cash}}</td>
+          <td *ngIf="i < 10">{{transaction.type}}</td>
+          
         </tr>
 
       </tbody>
