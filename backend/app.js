@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 
 
+
 let connection = mysql.createConnection({
   host: 'localhost',
   database: 'challenge',
@@ -56,6 +57,23 @@ app.post("/api/transaction", async (req, res, next) => {
 
 });
 
+app.post("/update/transaction", async (req, res, next) => {
+  const data = await req.body;
+  const transaction = data.transaction;
+  console.log(transaction);
+
+  connection.query(`UPDATE transaction SET name='${transaction.name}', cash=${transaction.cash},date='${transaction.date}', type='${transaction.type}' WHERE transactionId=${transaction.id}`, (err, result) => {
+    if (err) {
+      res.status(500).send({message: 'Cannot update transaction to database'});
+      throw err;
+    } else {
+      console.log('One row added');
+      return res.status(201).json({ message: 'transaction updated' });
+    }
+  });
+
+});
+
 app.get("/api/transaction", async (req, res, next) => {
 
   const transactions = [];
@@ -77,6 +95,43 @@ app.get("/api/transaction", async (req, res, next) => {
 
     }
   });
+
+});
+
+app.get("/transaction/:idTransaction", async (req, res, next) => {
+
+  const idTransaction = req.params.idTransaction;
+
+  await connection.query(`SELECT * FROM transaction WHERE transactionId = ${idTransaction}`, (err, result, fields) => {
+    if (err) {
+      res.status(500).send({ message: 'Internal server ERROR' });
+      throw err;
+
+    } else {
+      console.log(result);
+      res.status(200).json(result);
+
+    }
+  });
+
+});
+
+app.delete("/api/delete/transaction/:idTransaction", (req, res, next) => {
+  const transaction_id = req.params.idTransaction;
+  
+  try{
+    connection.query(`DELETE FROM transaction WHERE transactionId = ${transaction_id}` , (err, result, fields) => {
+        if(err){
+          res.status(500).send({message: 'Error while deleting transaction'});
+          throw err;
+        }else{
+          return res.status(200).send({message:'Transaction deleted!'});
+        }
+    });
+
+  }catch(error) {
+    console.log(error);
+  }
 
 });
 
