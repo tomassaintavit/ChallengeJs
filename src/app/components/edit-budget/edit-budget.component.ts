@@ -29,10 +29,11 @@ export class EditBudgetComponent implements OnInit {
     
     this.transactionService.getTransaction(this.transactionId).subscribe(doc => {
       this.transaction = doc[0];
+  
      this.transactionForm = {
       name: doc[0].name,
       cash: doc[0].cash,
-      date: doc[0].date,
+      date: doc[0].date.substring(0,10),
     };
  
     setTimeout(() => { 

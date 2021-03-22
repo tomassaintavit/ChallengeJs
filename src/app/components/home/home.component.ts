@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getTransactions().subscribe((transaction) => {
-    this.transactions = transaction;
+     this.transactions = transaction.reverse();
     });
   }
 

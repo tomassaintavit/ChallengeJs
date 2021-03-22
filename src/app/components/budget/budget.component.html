@@ -14,7 +14,7 @@
     <tr *ngFor="let transaction of transactions; index as i">
       <th scope="row">{{i + 1}}</th>
       <td>{{transaction.name}}</td>
-      <td>{{transaction.cash}}</td>
+      <td>{{transaction.cash | currency}}</td>
       <td>{{transaction.date | date:'shortDate'}}</td>
       <td>{{transaction.type}}</td>
       <td><button class="btn btn-danger" style="margin-right: 0.3cm;" (click)="deleteTransaction(transaction.transactionId)">Borrar</button>

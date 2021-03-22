@@ -1,4 +1,4 @@
-<h3>Mi Presupuesto actual : ${{getActualMoney()}}</h3>
+<h3>Mi Presupuesto actual : {{getActualMoney() | currency}}</h3>
 <hr>
 
 <h3>Historico</h3>
@@ -18,7 +18,7 @@
           
           <th  *ngIf="i < 10" scope="row">{{i + 1}}</th>
           <td *ngIf="i < 10">{{transaction.name}}</td>
-          <td *ngIf="i < 10">{{transaction.cash}}</td>
+          <td *ngIf="i < 10">{{transaction.cash | currency}}</td>
           <td *ngIf="i < 10">{{transaction.type}}</td>
           
         </tr>
