@@ -1,5 +1,5 @@
 # ChallengeJs
-A javascript challenge for Alkemy company
+A javascript challenge for Alkemy Labs
 
 Install dependencies
 npm install
