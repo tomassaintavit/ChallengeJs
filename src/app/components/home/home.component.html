@@ -1,0 +1,30 @@
+<h3>Mi Presupuesto actual : {{getActualMoney() | currency}}</h3>
+<hr>
+
+<h3>Historico</h3>
+<div class="row" style="margin-top: 1cm;">
+  <div class="col col-9 ">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Concepto</th>
+          <th scope="col">Monto</th>
+          <th scope="col">Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions; index as i">
+          
+          <th  *ngIf="i < 10" scope="row">{{i + 1}}</th>
+          <td *ngIf="i < 10">{{transaction.name}}</td>
+          <td *ngIf="i < 10">{{transaction.cash | currency}}</td>
+          <td *ngIf="i < 10">{{transaction.type}}</td>
+          
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
